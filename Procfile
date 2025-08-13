@@ -1,1 +1,1 @@
-
+worker: python countbot.py
