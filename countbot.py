@@ -7,7 +7,7 @@ import re
 load_dotenv()
 
 TOKEN = os.getenv("DISCORD_TOKEN")
-MOD_CHANNEL_ID = 1402963055821717629
+MOD_CHANNEL_ID = 1402987082388869282
 
 intents = discord.Intents.default()
 intents.messages = True
@@ -36,3 +36,4 @@ async def on_message(message):
     await bot.process_commands(message)
 
 bot.run(TOKEN)
+
