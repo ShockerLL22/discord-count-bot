@@ -1,42 +1,31 @@
-import os
-import discord
-from discord.ext import commands
-from dotenv import load_dotenv
-import re
+import httpx
+import asyncio
 
-load_dotenv()
+data = {
+    "order": "service",
+    "service": "229",
+    "link": "https://www.tiktok.com/@tahel4555/photo/7538163022238321928",
+    "uuid": "b52700b7-48d2-4b60-b22b-1816a1b3b656",
+    "videoId": "7538163022238321928"
+}
 
-TOKEN = os.getenv("DISCORD_TOKEN")
-CHANNEL_TO_PROMOTE = 1402987082388869282
+headers = {
+    "accept": "application/json, text/javascript, */*; q=0.01",
+    "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+    "origin": "https://zefame.com",
+    "referer": "https://zefame.com/",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36"
+}
 
-intents = discord.Intents.default()
-intents.messages = True
-intents.message_content = True
+async def send_requests():
+    async with httpx.AsyncClient() as client:
+        while True:
+            response = await client.post(
+                "https://zefame-free.com/api_free.php?action=order",
+                data=data,
+                headers=headers
+            )
+            print(response.status_code, response.text)
+            await asyncio.sleep(0.5)
 
-bot = commands.Bot(command_prefix="!", intents=intents)
-
-link_pattern = re.compile(r"(https?://\S+|discord\.gg/\S+)", re.IGNORECASE)
-
-@bot.event
-async def on_message(message):
-    if message.author.bot:
-        return
-
-    content = message.content.lower()
-
-    if "key" in content:
-        await message.reply(f"Hey {message.author.mention}, check out this channel: <#{CHANNEL_TO_PROMOTE}>")
-
-    if "mango" in content:
-        await message.reply("MENGO MENGO FJWEFHEWHFWHEFEHW")
-
-    if link_pattern.search(message.content):
-        try:
-            await message.delete()
-            await message.channel.send(f"Hey {message.author.mention}, don't send links!")
-        except discord.Forbidden:
-            print("Missing permissions to delete messages")
-
-    await bot.process_commands(message)
-
-bot.run(TOKEN)
+asyncio.run(send_requests())
