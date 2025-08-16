@@ -1,31 +1,31 @@
-import httpx
-import asyncio
+import requests
+import time
 
-data = {
-    "order": "service",
-    "service": "229",
-    "link": "https://www.tiktok.com/@eliya_amar001/video/7532101132835884296",
-    "uuid": "b52700b7-48d2-4b60-b22b-1816a1b3b656",
-    "videoId": "7532101132835884296"
-}
-
+url = "https://zefame-free.com/api_free.php?action=order"
 headers = {
     "accept": "application/json, text/javascript, */*; q=0.01",
+    "accept-encoding": "gzip, deflate, br, zstd",
+    "accept-language": "en-US,en;q=0.9",
     "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
     "origin": "https://zefame.com",
     "referer": "https://zefame.com/",
-    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36"
+    "sec-ch-ua": '"Not)A;Brand";v="8", "Chromium";v="138", "Google Chrome";v="138"',
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": '"Windows"',
+    "sec-fetch-dest": "empty",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-site": "cross-site",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36"
+}
+data = {
+    "action": "order",
+    "service": "232",
+    "link": "https://www.tiktok.com/@sky4zprm/photo/7539202359541419282",
+    "uuid": "482fa303-0b70-452c-8b51-d7c52ede5872",
+    "videoId": "7539202359541419282"
 }
 
-async def send_requests():
-    async with httpx.AsyncClient() as client:
-        while True:
-            response = await client.post(
-                "https://zefame-free.com/api_free.php?action=order",
-                data=data,
-                headers=headers
-            )
-            print(response.status_code, response.text)
-            await asyncio.sleep(0.5)
-
-asyncio.run(send_requests())
+while True:
+    r = requests.post(url, headers=headers, data=data)
+    print(r.text)
+    time.sleep(5)
