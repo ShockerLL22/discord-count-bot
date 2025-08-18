@@ -20,13 +20,14 @@ headers = {
 data = {
     "action": "order",
     "service": "232",
-    "link": "https://www.tiktok.com/@tair4830/photo/7539540311710928146",
+    "link": "https://www.tiktok.com/@hadar.houta/photo/7536679096932142343",
     "uuid": "482fa303-0b70-452c-8b51-d7c52ede5872",
-    "videoId": "7539540311710928146"
+    "videoId": "7536679096932142343"
 }
 
 while True:
     r = requests.post(url, headers=headers, data=data)
     print(r.text)
     time.sleep(5)
+
 
